@@ -29,7 +29,7 @@ public class EvenOddTest {
     }
     @Test
     public void testIsOdd_givenOdd_true () {
-        Assert.assertEquals(evenodd.isOdd(2),true);
+        Assert.assertEquals(evenodd.isOdd(1),true);
     }
 
 }
