@@ -4,7 +4,7 @@ public class Game {
     private Map map;
 
     public static void main(String[] args){
-
+        System.out.println("Test");
     }
 
     public void startGame(){
