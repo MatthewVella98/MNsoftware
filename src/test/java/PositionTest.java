@@ -51,8 +51,8 @@ public class PositionTest {
 
         for(int i = 0; i< 50; i++) {
             position = Position.SetReturnPosition(size);
-            Assert.assertTrue(position.getX() <= size && position.getX() > 0);
-            Assert.assertTrue(position.getY() <= size && position.getY() > 0);
+            Assert.assertTrue(position.getX() < size && position.getX() >= 0);
+            Assert.assertTrue(position.getY() < size && position.getY() >=0);
         }
     }
 }
