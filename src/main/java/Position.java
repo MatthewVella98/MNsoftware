@@ -30,7 +30,7 @@ public class Position {
     }
 
     //Sets a random position and returns it.
-    public Position SetReturnPosition(int size){
+    public static Position SetReturnPosition(int size){
         Position position = new Position();
 
         position.x = (int)(Math.random() * size) +1;

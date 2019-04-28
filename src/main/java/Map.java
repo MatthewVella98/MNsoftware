@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
-    private enum Tile {
+    public enum Tile {
         GRASS,WATER,TREASURE
     }
     private Tile[][] map;
@@ -14,6 +14,10 @@ public class Map {
     public Map(int size){
         this.size = size;
         map = new Tile[size][size];
+    }
+
+    public int ReturnMapSize(){
+        return size;
     }
 
     //Returns true if map is set.
