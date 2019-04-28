@@ -47,8 +47,8 @@ public class Map {
         }
 
         //Treasure
-        int x = (int)(Math.random() * size) + 1;
-        int y = (int)(Math.random() * size) + 1;
+        int x = (int)(Math.random() * size) ;
+        int y = (int)(Math.random() * size) ;
 
         map[x][y] = Tile.TREASURE;
 

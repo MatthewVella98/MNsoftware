@@ -33,6 +33,11 @@ public class Player {
                 throw new InputMismatchException("Invalid.");
         }
     }
+    //
+    public void GoToInitialPosition(){
+        position.setX(initPosition.getX());
+        position.setY(initPosition.getY());
+    }
 
     //Getters & Setters
     public void setPosition(Position position){
