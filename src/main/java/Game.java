@@ -1,3 +1,5 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -159,7 +161,6 @@ public class Game {
         }
     }
 
-
     private void GetNextMoves() {
         System.out.println("Enter Move: [U]p, [D]own, [L]eft, [R]ight");
         for(int i = 0; i < noOfPlayers; i++) {
@@ -235,7 +236,79 @@ public class Game {
     }
 
     public void generateHTMLFiles(){
+        StringBuilder header = new StringBuilder();
 
+        header.append("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<title>Loop Game</title>\n" +
+                "<style>\n" +
+                "table, th, td {\n" +
+                "    border: 1px solid black;  \n" +
+                "} \n" +
+                "th, td {\n" +
+                "    background-color: lightgrey \n" +
+                "} \n" +
+                "table {    \n" +
+                "    table-layout: fixed;\n" +
+                "    width: "+sizeOfMap*100+"px;\n" +
+                "    height: "+sizeOfMap*100+"px;\n" +
+                "    border: 1px solid black;\n" +
+                "\n" +
+                "}\n" +
+                "\n" +
+                ".GRASS {\n" +
+                "    background-color: green;\n" +
+                "}\n" +
+                ".WATER {\n" +
+                "    background-color: blue;\n" +
+                "}\n" +
+                ".TREASURE {\n" +
+                "    background-color: yellow;\n" +
+                "}\n" +
+                "\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "<body>\n");
+
+        for(int player = 0; player < noOfPlayers; player++) {
+            StringBuilder html = new StringBuilder();
+            // Header
+            html.append(header);
+
+            html.append("<h1>Player " + (player + 1) + "</h1>");// + " position: " + players[player].getPosition().x + ", " + players[player].getPosition().y);
+
+            html.append("<table cellspacing=\"0\" cellpadding=\"0\">\n");
+
+            for (int j = sizeOfMap - 1; j >= 0; j--) {
+                html.append("<tr>\n");
+                for (int i = 0; i < sizeOfMap; i++) {
+                    if (playerStops.get(player)[i][j]) {
+                        html.append("\t<td class=\"" + map.getTileType(i, j) + "\" align=\"center\">");
+                        if (players[player].getPosition().getX() == i && players[player].getPosition().getY() == j) {
+                            html.append("Player.</td>\n");
+                        } else {
+                            html.append("</td>\n");
+                        }
+                    } else {
+                        html.append("\t<td></td>\n");
+                    }
+                }
+                html.append("\n</tr>\n");
+            }
+
+            html.append("\n</table>" +
+                    "\n</body>");
+
+            // Write to file
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new FileWriter("player_map_" + (player + 1) + ".html"));
+                writer.write(html.toString());
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }

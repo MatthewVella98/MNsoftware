@@ -8,6 +8,8 @@ public class Player {
     public enum Move{
         LEFT,RIGHT,UP,DOWN
     }
+
+
     //Constructor
     public Player(Position position){
         this.position = position;
