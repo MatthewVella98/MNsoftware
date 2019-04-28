@@ -5,7 +5,7 @@ public class Player {
     private Position initPosition; //Initial position
 
     //Move enums: Can be passed as argument in the switch.
-    private enum Move{
+    public enum Move{
         LEFT,RIGHT,UP,DOWN
     }
     //Constructor
