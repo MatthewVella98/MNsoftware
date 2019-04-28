@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Position {
     private int x;
     private int y;
@@ -33,8 +31,8 @@ public class Position {
     public static Position SetReturnPosition(int size){
         Position position = new Position();
 
-        position.x = (int)(Math.random() * size) +1;
-        position.y = (int)(Math.random() * size) +1;
+        position.x = (int)(Math.random() * size) ;
+        position.y = (int)(Math.random() * size) ;
 
         return position;
     }
@@ -43,4 +41,5 @@ public class Position {
     public Position HoldInitialPosition(){
         return new Position(x,y);
     }
+
 }
