@@ -12,7 +12,9 @@ public class Game {
     private Map map;
     private int noOfPlayers;
     private int sizeOfMap;
-    Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
+    int mapChoice =0;
+    static Map generatedMap;
 
 
     public static void main(String[] args){
@@ -20,8 +22,8 @@ public class Game {
         game.startGame();
     }
 
-    public void startGame(){
-        while(true){
+    private void startGame(){
+        do {
             //No of players.
             noOfPlayers = GetNoOfPlayers();
 
@@ -29,8 +31,10 @@ public class Game {
             sizeOfMap = GetMapSize();
 
             //Generate map
-            map = new Map(sizeOfMap);
-            map.generate();
+            inputMapChoice(mapChoice);
+
+//            map = new Map(sizeOfMap);
+//            map.generate();
 
             //Create new players
             CreateNewPlayers();
@@ -41,11 +45,41 @@ public class Game {
             //Winners
             CheckForWinner();  //Play again if win.
 
-            if(!Rematch()) {
-                break;
+        } while (Rematch());
+    }
+
+    private void inputMapChoice(int mapChoice)
+    {
+        while (mapChoice != 1 && mapChoice != 2)
+        {
+            System.out.println("Please input 1 for Safe Map and 2 for Hazardous Map");
+            mapChoice = sc.nextInt();
+
+            // The game map creator which is responsible for creating the game maps
+            MapCreator mapCreator;
+
+            if (mapChoice == 1)
+            {
+                mapCreator = new MapCreatorSafe();
+                mapCreator.generateGameMap(sizeOfMap);
+                generatedMap = Map.getMapInstance();
+
+            }
+            else if (mapChoice == 2)
+            {
+                mapCreator = new MapCreatorHazardous();
+                mapCreator.generateGameMap(sizeOfMap);
+                generatedMap = Map.getMapInstance();
+
+            }
+            else
+            {
+                System.out.println("Please enter a correct choice.");
             }
         }
     }
+
+
 
     private int GetNoOfPlayers() {
         int num = -100;
@@ -93,14 +127,14 @@ public class Game {
         }
     }
 
-    public void CreateNewPlayers()
+    private void CreateNewPlayers()
     {
         players = new Player[noOfPlayers];
         playerStops = new ArrayList<boolean[][]>();
         for(int i = 0; i < players.length; i++) {
 
             Position pos = Position.SetReturnPosition(sizeOfMap);
-            while(map.getTileType(pos.getX(),pos.getY()) != Map.Tile.GRASS) {
+            while(generatedMap.getTileType(pos.getX(),pos.getY()) != Map.Tile.GRASS) {
                 pos = Position.SetReturnPosition(sizeOfMap);
             }
 
@@ -113,7 +147,7 @@ public class Game {
         }
     }
 
-    public void PlayersMovement(){
+    private void PlayersMovement(){
         boolean playersWon = false;
         while(!playersWon) {
             generateHTMLFiles();
@@ -136,7 +170,7 @@ public class Game {
         }
     }
 
-    public void CheckForWinner(){
+    private void CheckForWinner(){
         for(int i = 0; i < noOfPlayers; i++) {
             Map.Tile tile = ReturningPosition(i);
             generateHTMLFiles();
@@ -228,14 +262,14 @@ public class Game {
     }
 
     private Map.Tile ReturningPosition(int player) {
-        return map.getTileType(players[player].getPosition().getX(),players[player].getPosition().getX());
+        return generatedMap.getTileType(players[player].getPosition().getX(),players[player].getPosition().getX());
     }
 
     public boolean SetNumPlayers(int n){
         return false;
     }
 
-    public void generateHTMLFiles(){
+    private void generateHTMLFiles(){
         StringBuilder header = new StringBuilder();
 
         header.append("<!DOCTYPE html>\n" +
@@ -276,7 +310,7 @@ public class Game {
             // Header
             html.append(header);
 
-            html.append("<h1>Player " + (player + 1) + "</h1>");// + " position: " + players[player].getPosition().x + ", " + players[player].getPosition().y);
+            html.append("<h1>Player " + (player + 1) + "</h1>");
 
             html.append("<table cellspacing=\"0\" cellpadding=\"0\">\n");
 
@@ -284,7 +318,7 @@ public class Game {
                 html.append("<tr>\n");
                 for (int i = 0; i < sizeOfMap; i++) {
                     if (playerStops.get(player)[i][j]) {
-                        html.append("\t<td class=\"" + map.getTileType(i, j) + "\" align=\"center\">");
+                        html.append("\t<td class=\"" + generatedMap.getTileType(i, j) + "\" align=\"center\">");
                         if (players[player].getPosition().getX() == i && players[player].getPosition().getY() == j) {
                             html.append("Player.</td>\n");
                         } else {
