@@ -9,7 +9,7 @@ public class MapTest {
 
     @Before
     public void setup() {
-        map = new Map();
+        map = new SafeMap();
     }
 
     @After
@@ -19,7 +19,7 @@ public class MapTest {
 
     @Test
     public void testMap_AllTilesShouldBeATile() {
-        map = new Map(5);
+        map = new SafeMap(5);
         map.generate();
 
         for(int i = 0; i < map.ReturnMapSize(); i++) {
@@ -33,7 +33,7 @@ public class MapTest {
     @Test
     public void testChangeMapSize_() {
         int x = 3;
-        map = new Map(x);
+        map = new SafeMap(x);
         Assert.assertEquals(x, map.ReturnMapSize());
 
         int y = 4;

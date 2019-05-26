@@ -1,3 +1,5 @@
+package Part1;
+
 public class EvenOdd {
     public boolean isEven(int val){
         if (val % 2 == 0){

@@ -1,13 +1,20 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
-public class Map {
+public abstract class Map
+{
+    static Map mapInstance;
+
+    public double WaterTilesPercent = 0.3;
+
+    public abstract void generate();
+
     public enum Tile {
         GRASS,WATER,TREASURE
     }
     private Tile[][] map;
-    private int size;
+    protected int size;
 
     //Constructors
     public Map(){}
@@ -30,37 +37,48 @@ public class Map {
 
     //Generate a random tile.
     public Tile RandomiseTile(){
-        Tile tile = (Math.random() < 0.25) ?  Tile.WATER :  Tile.GRASS;
+        Tile tile = (Math.random() < WaterTilesPercent) ?  Tile.WATER :  Tile.GRASS;
         return tile;
     }
 
+    public Tile getTileType(int x, int y){
+        return map[x][y];
+    }
+
+    public Tile getTileType(Position pos){
+        return map[pos.getX()][pos.getY()];
+    }
+
     //Generate each type.
-    public void generate(){
-        List<Boolean> list = new ArrayList<Boolean>();
+    public void generateMap() {
+        boolean valid = false;
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 map[i][j] = RandomiseTile();
 
+                // Make sure that there is at least one Grass tile
                 if(map[i][j] == Tile.GRASS) {
-                    list.add(true);
+                    valid = true;
                 }
             }
         }
 
-        //Treasure
-        int x = (int)(Math.random() * size) ;
-        int y = (int)(Math.random() * size) ;
+        Random random = new Random();
+        // Set treasure
+        int x = random.nextInt(size);
+        int y = random.nextInt(size);
 
         map[x][y] = Tile.TREASURE;
 
-        //At least, 33% of the MAP has to be GRASS.
-        if(list.size() < (size * 0.33))
+        if(!valid) {
+            // No grass tiles preset, .: regenerate the map
             generate();
+        }
     }
 
-    public Tile getTileType(int x,int y){
-        return map [x][y];
+    public static Map getMapInstance(){
+        return mapInstance;
     }
-
 
 }
