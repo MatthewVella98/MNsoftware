@@ -1,3 +1,5 @@
+package Part1;
+
 public class BoolFunctions {
     public boolean isSameInt(int var,int val){
         return var == val;

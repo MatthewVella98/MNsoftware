@@ -5,11 +5,12 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 
 public class MapTest {
-    private Map map;
+    private static Map map;
+    private MapCreator mapCreator;
 
     @Before
     public void setup() {
-        map = new Map();
+        mapCreator = new MapCreatorSafe();
     }
 
     @After
@@ -18,8 +19,22 @@ public class MapTest {
     }
 
     @Test
+    public void test_singleton_usingMapSize(){
+        mapCreator.generateGameMap(5);
+        mapCreator.generateGameMap(2);
+
+        Assert.assertEquals(5,map.getMapInstance().size);
+    }
+
+    @Test
+    public void test_correctMapSize(){
+        mapCreator.generateGameMap(5);
+        Assert.assertTrue(map.getMapInstance().size == 5);
+    }
+
+    @Test
     public void testMap_AllTilesShouldBeATile() {
-        map = new Map(5);
+        map = new SafeMap(5);
         map.generate();
 
         for(int i = 0; i < map.ReturnMapSize(); i++) {
@@ -33,7 +48,7 @@ public class MapTest {
     @Test
     public void testChangeMapSize_() {
         int x = 3;
-        map = new Map(x);
+        map = new SafeMap(x);
         Assert.assertEquals(x, map.ReturnMapSize());
 
         int y = 4;
