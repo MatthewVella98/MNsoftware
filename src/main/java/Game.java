@@ -13,8 +13,7 @@ public class Game {
     private int noOfPlayers;
     private int sizeOfMap;
     private Scanner sc = new Scanner(System.in);
-    int mapChoice =0;
-    static Map generatedMap;
+    private static Map generatedMap;
 
 
     public static void main(String[] args){
@@ -31,10 +30,11 @@ public class Game {
             sizeOfMap = GetMapSize();
 
             //Generate map
+            int mapChoice = 0;
             inputMapChoice(mapChoice);
 
-//            map = new Map(sizeOfMap);
-//            map.generate();
+//           map = new Map(sizeOfMap);
+//           map.generate();
 
             //Create new players
             CreateNewPlayers();
@@ -272,38 +272,7 @@ public class Game {
     private void generateHTMLFiles(){
         StringBuilder header = new StringBuilder();
 
-        header.append("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<title>Loop Game</title>\n" +
-                "<style>\n" +
-                "table, th, td {\n" +
-                "    border: 1px solid black;  \n" +
-                "} \n" +
-                "th, td {\n" +
-                "    background-color: lightgrey \n" +
-                "} \n" +
-                "table {    \n" +
-                "    table-layout: fixed;\n" +
-                "    width: "+sizeOfMap*100+"px;\n" +
-                "    height: "+sizeOfMap*100+"px;\n" +
-                "    border: 1px solid black;\n" +
-                "\n" +
-                "}\n" +
-                "\n" +
-                ".GRASS {\n" +
-                "    background-color: green;\n" +
-                "}\n" +
-                ".WATER {\n" +
-                "    background-color: blue;\n" +
-                "}\n" +
-                ".TREASURE {\n" +
-                "    background-color: yellow;\n" +
-                "}\n" +
-                "\n" +
-                "</style>\n" +
-                "</head>\n" +
-                "<body>\n");
+        header.append("<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<title>Loop Game</title>\n" + "<style>\n" + "table, th, td {\n" + "    border: 1px solid black;  \n" + "} \n" + "th, td {\n" + "    background-color: lightgrey \n" + "} \n" + "table {    \n" + "    table-layout: fixed;\n" + "    width: ").append(sizeOfMap * 100).append("px;\n").append("    height: ").append(sizeOfMap * 100).append("px;\n").append("    border: 1px solid black;\n").append("\n").append("}\n").append("\n").append(".GRASS {\n").append("    background-color: green;\n").append("}\n").append(".WATER {\n").append("    background-color: blue;\n").append("}\n").append(".TREASURE {\n").append("    background-color: yellow;\n").append("}\n").append("\n").append("</style>\n").append("</head>\n").append("<body>\n");
 
         for(int player = 0; player < noOfPlayers; player++) {
             StringBuilder html = new StringBuilder();

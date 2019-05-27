@@ -5,16 +5,31 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 
 public class MapTest {
-    private Map map;
+    private static Map map;
+    private MapCreator mapCreator;
 
     @Before
     public void setup() {
-        map = new SafeMap();
+        mapCreator = new MapCreatorSafe();
     }
 
     @After
     public void teardown() {
         map = null;
+    }
+
+    @Test
+    public void test_singleton_usingMapSize(){
+        mapCreator.generateGameMap(5);
+        mapCreator.generateGameMap(2);
+
+        Assert.assertEquals(5,map.getMapInstance().size);
+    }
+
+    @Test
+    public void test_correctMapSize(){
+        mapCreator.generateGameMap(5);
+        Assert.assertTrue(map.getMapInstance().size == 5);
     }
 
     @Test
